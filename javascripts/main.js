@@ -8,7 +8,7 @@ var CREST = {
             "?response_type=" + this.response_type +
             "&redirect_uri="  + this.redirect_uri +
             "&state=" + CRESTapp.state +
-            "&scope=" + "characterSkillsRead";
+            "&scope=" + "publicData";
 
         d3.select("#sso_btn").attr("disabled", "disabled");
 
