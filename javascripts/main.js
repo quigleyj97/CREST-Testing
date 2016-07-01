@@ -39,8 +39,9 @@ window.onload = function()  {
         // we have been authorized
         console.log("success!", getQueryVariable("state"));
         d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("access_token") + "'");
-        var request = d3.request("https://login.eveonline.com/oauth/verify")
+        var request = d3.request("https://crest-tq.eveonline.com/")
             .header("Authorization", "Bearer " + getQueryVariable("access_token"))
             .get(function(err, response)    {console.log(err, response); });
+        console.log(request);
     }
 };
