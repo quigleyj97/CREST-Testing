@@ -3,6 +3,7 @@ var CREST = {
     redirect_uri:encodeURIComponent("https://quigleyj97.github.io/CREST-Testing/"),
     response_type:"token",
     auth_endpoint:"https://login.eveonline.com/oauth/authorize/",
+    tranquility:"https://crest-tq.eveonline.com/",
     ssoRedirect: function ()    {
         var requestString = this.auth_endpoint +
             "?response_type=" + this.response_type +
@@ -14,15 +15,17 @@ var CREST = {
         d3.select("#sso_btn").attr("disabled", "disabled");
 
         window.location = requestString;
-    }
+    },
+
 };
 
 var CRESTapp    =   {
-    state : "init",
+    state : "init"
 };
 
 function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
+    // Apparently CREST is returning with a hash, not a query string as documented
+    var query = window.location.hash.substring(1);
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {
         var pair = vars[i].split("=");
@@ -32,9 +35,9 @@ function getQueryVariable(variable) {
 }
 
 window.onload = function()  {
-    if(getQueryVariable("state") == "init") {
+    if(getQueryVariable("state")) {
         // we have been authorized
         console.log("success!", getQueryVariable("state"));
-        d3.select("#api_out").insert("pre").text("Authorization Successful! authcode='" + getQueryVariable("code") + "'");
+        d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("access_token") + "'");
     }
 };
