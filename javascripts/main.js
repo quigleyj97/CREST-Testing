@@ -1,6 +1,7 @@
 var CREST = {
     client_id:"f8f3a75e20b94a25b9c1634aa382a63c",
     redirect_uri:encodeURIComponent("https://quigleyj97.github.io/CREST-Testing/"),
+    scope:encodeURIComponent("publicData characterAssetsRead characterCalendarRead"),
     response_type:"token",
     auth_endpoint:"https://login.eveonline.com/oauth/authorize/",
     tranquility:"https://crest-tq.eveonline.com/",
@@ -10,7 +11,7 @@ var CREST = {
             "&redirect_uri="  + this.redirect_uri +
             "&client_id=" + this.client_id +
             "&state=" + CRESTapp.state +
-            "&scope=" + "publicData";
+            "&scope=" + this.scope;
 
         d3.select("#sso_btn").attr("disabled", "disabled");
 
@@ -20,7 +21,15 @@ var CREST = {
 };
 
 var CRESTapp    =   {
-    state : "init"
+    state : "init",
+
+    parseRoot : function(err, response)    {
+        if (err) throw err;
+
+        var root = JSON.parse(response.responseText);
+
+        console.log(root);
+    }
 };
 
 function getQueryVariable(variable) {
@@ -33,7 +42,6 @@ function getQueryVariable(variable) {
     }
     return(false);
 }
-
 window.onload = function()  {
     if(getQueryVariable("state")) {
         // we have been authorized
