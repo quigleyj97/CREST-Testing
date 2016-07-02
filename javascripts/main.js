@@ -29,6 +29,10 @@ var CRESTapp    =   {
         var root = JSON.parse(response.responseText);
 
         console.log(root);
+
+        d3.request(root.authEndpoint.href)
+            .header("Authorization", "Bearer " + getQueryVariable("access_token"))
+            .get(function(err, result) { console.log( "Auth endpoint reached", err, result);});
     }
 };
 
