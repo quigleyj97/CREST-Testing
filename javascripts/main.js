@@ -1,7 +1,7 @@
 var CREST = {
     client_id:"f8f3a75e20b94a25b9c1634aa382a63c",
     redirect_uri:encodeURIComponent("https://quigleyj97.github.io/CREST-Testing/"),
-    scope:encodeURIComponent("publicData characterAssetsRead characterCalendarRead"),
+    scope:encodeURIComponent("publicData characterInfo characterAssetsRead characterCalendarRead"),
     response_type:"token",
     auth_endpoint:"https://login.eveonline.com/oauth/authorize/",
     tranquility:"https://crest-tq.eveonline.com/",
@@ -49,7 +49,7 @@ window.onload = function()  {
         d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("access_token") + "'");
         var request = d3.request("https://crest-tq.eveonline.com/")
             .header("Authorization", "Bearer " + getQueryVariable("access_token"))
-            .get(function(err, response)    {console.log(err, response); });
+            .get(CRESTapp.parseRoot);
         console.log(request);
     }
 };
