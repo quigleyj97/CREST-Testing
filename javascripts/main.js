@@ -30,7 +30,7 @@ var CRESTapp    =   {
 
         console.log(root);
 
-        var zztop = d3.request(root.authEndpoint.href + "?grant_type=authorization_code&code=" + getQueryVariable("code"));
+        var zztop = d3.request(root.authEndpoint.href);
 
         console.log("Auth request: ", zztop);
     }
