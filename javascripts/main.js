@@ -2,7 +2,7 @@ var CREST = {
     client_id:"f8f3a75e20b94a25b9c1634aa382a63c",
     redirect_uri:encodeURIComponent("https://quigleyj97.github.io/CREST-Testing/"),
     scope:encodeURIComponent("publicData characterAssetsRead characterCalendarRead"),
-    response_type:"token",
+    response_type:"code",
     auth_endpoint:"https://login.eveonline.com/oauth/authorize/",
     tranquility:"https://crest-tq.eveonline.com/",
     ssoRedirect: function ()    {
@@ -30,15 +30,15 @@ var CRESTapp    =   {
 
         console.log(root);
 
-        d3.request(root.authEndpoint.href)
-            .header("Authorization", "Bearer " + getQueryVariable("access_token"))
-            .get(function(err, result) { console.log( "Auth endpoint reached", err, result);});
+        var zztop = d3.request(root.authEndpoint.href + "?grant_type=authorization_code&code=" + getQueryVariable("code"));
+
+        console.log("Auth request: ", zztop);
     }
 };
 
 function getQueryVariable(variable) {
-    // Apparently CREST is returning with a hash, not a query string as documented
-    var query = window.location.hash.substring(1);
+    // CREST returns with a hash for implicit flow or query string for auth flow
+    var query = window.location.search.substring(1) || window.location.hash.substring(1);
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {
         var pair = vars[i].split("=");
@@ -50,9 +50,9 @@ window.onload = function()  {
     if(getQueryVariable("state")) {
         // we have been authorized
         console.log("success!", getQueryVariable("state"));
-        d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("access_token") + "'");
+        d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("code") + "'");
         var request = d3.request("https://crest-tq.eveonline.com/")
-            .header("Authorization", "Bearer " + getQueryVariable("access_token"))
+            .header("Authorization", "Bearer " + getQueryVariable("code"))
             .get(CRESTapp.parseRoot);
         console.log(request);
     }
