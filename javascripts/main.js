@@ -2,7 +2,7 @@ var CREST = {
     client_id:"f8f3a75e20b94a25b9c1634aa382a63c",
     redirect_uri:encodeURIComponent("https://quigleyj97.github.io/CREST-Testing/"),
     scope:encodeURIComponent("publicData characterAssetsRead characterCalendarRead"),
-    response_type:"code",
+    response_type:"token",
     auth_endpoint:"https://login.eveonline.com/oauth/authorize/",
     tranquility:"https://crest-tq.eveonline.com/",
     ssoRedirect: function ()    {
