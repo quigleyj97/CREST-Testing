@@ -29,10 +29,6 @@ var CRESTapp    =   {
         var root = JSON.parse(response.responseText);
 
         console.log(root);
-
-        var zztop = d3.request(root.authEndpoint.href);
-
-        console.log("Auth request: ", zztop);
     }
 };
 
@@ -50,8 +46,9 @@ window.onload = function()  {
     if(getQueryVariable("state")) {
         // we have been authorized
         console.log("success!", getQueryVariable("state"));
-        d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("code") + "'");
+        d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("access_token") + "'");
         var request = d3.request("https://crest-tq.eveonline.com/")
+            .header("Authorization", "Bearer " + getQueryVariable("access_token"))
             .get(CRESTapp.parseRoot);
         console.log(request);
     }
