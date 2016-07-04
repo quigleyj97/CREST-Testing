@@ -52,7 +52,6 @@ window.onload = function()  {
         console.log("success!", getQueryVariable("state"));
         d3.select("#api_out").append("pre").text("Authorization Successful! authcode='" + getQueryVariable("code") + "'");
         var request = d3.request("https://crest-tq.eveonline.com/")
-            .header("Authorization", "Bearer " + getQueryVariable("code"))
             .get(CRESTapp.parseRoot);
         console.log(request);
     }
